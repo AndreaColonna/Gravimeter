@@ -218,13 +218,13 @@
       <edit signed="false" unit="m/s²" default="0.01" label="Bin size">
         <output>binSize</output>
       </edit>
-      <value precision="3" unit="m/s²" label="g_z">
+      <value precision="4" unit="m/s²" label="g_z">
         <input>accZ</input>
       </value>
-      <value precision="3" unit="m/s²" factor="1" label="valor medio g_z">
+      <value precision="4" unit="m/s²" factor="1" label="valor medio g_z">
         <input>average</input>
       </value>
-      <value precision="3" unit="m/s²" factor="1" label="Standard deviation">
+      <value precision="4" unit="m/s²" factor="1" label="Standard deviation">
         <input>deviation</input>
       </value>
       <value precision="0" factor="1" label="Conteggi">
@@ -237,13 +237,13 @@
         <input>lat</input>
       </value>
       <separator/>
-      <value precision="3" unit="m" label="altezza">
+      <value precision="6" unit="m" label="altezza">
         <input>zwgs84</input>
       </value>
-      <value precision="3" unit="m/s²" label="g_t">
+      <value precision="6" unit="m/s²" label="g_t">
         <input>z</input>
       </value>
-      <value precision="3" unit="m/s²" label="bias">
+      <value precision="6" unit="m/s²" label="bias">
         <input>bias</input>  
       </value>
 
@@ -256,13 +256,13 @@
       <edit signed="false" unit="m/s²" default="0.01" label="Bin size">
         <output>binSize_c</output>
       </edit>
-      <value precision="3" unit="m/s²" label="g_z">
+      <value precision="4" unit="m/s²" label="g_z">
         <input>accZ_c</input>
       </value>
-      <value precision="3" unit="m/s²" factor="1" label="valor medio g_z">
+      <value precision="4" unit="m/s²" factor="1" label="valor medio g_z">
         <input>average_c</input>
       </value>
-      <value precision="3" unit="m/s²" factor="1" label="Standard deviation">
+      <value precision="4" unit="m/s²" factor="1" label="Standard deviation">
         <input>deviation_c</input>
       </value>
       <value precision="0" factor="1" label="Conteggi">

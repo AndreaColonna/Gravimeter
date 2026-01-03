@@ -281,7 +281,10 @@
       
         <edit signed="false"unit="[[unit_short_degree]]" default="45.8919" label="latitudine FG5-238">
             <output>lat0</output>
-          </edit>    
+        </edit> 
+        <edit signed="false"unit="m" default="212" label="altezza FG5-238">
+            <output>h0</output>
+        </edit> 
     </view>
   </views>
   <export>

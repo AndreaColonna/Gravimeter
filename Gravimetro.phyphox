@@ -285,7 +285,9 @@
         <edit signed="false"unit="m" default="212" label="altezza FG5-238">
             <output>h0</output>
         </edit> 
-        <edit type="text" label="sito FG5-238" signed="false" unit="" default="Rovereto" memory="true" mapTo="site"/>
+        <edit type="text" label="sito FG5-238" signed="false" unit="" default="Rovereto" memory="true">
+            <output>site</output>
+         </edit> 
         <edit signed="false"unit="m/s²" default="9.80629220" label="g FG5-238">
             <output>g0</output>
         </edit>

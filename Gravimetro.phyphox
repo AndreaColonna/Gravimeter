@@ -49,6 +49,7 @@
     
     <container size="0">sinL</container>
     <container size="0">sin2L</container>
+
     
     <container>bias</container>
     <container size="0">accZ_c</container>
@@ -63,6 +64,12 @@
 
     <container size="500">gaussianX_c</container>
     <container size="500">gaussian_c</container>
+
+    <container size="0">lat0</container>
+    <container size="0">h0</container>
+    <container size="0">g0</container>
+    <container size="0">Eg0</container>
+    <container size="0">site</container>
   </data-containers>
 <!-- Dati del telefonino -->
   <input>
@@ -237,7 +244,7 @@
         <input>lat</input>
       </value>
       <separator/>
-      <value precision="6" unit="m" label="altezza">
+      <value precision="6" unit="m" label="altezza WGS84">
         <input>zwgs84</input>
       </value>
       <value precision="6" unit="m/s²" label="g_t">
@@ -271,7 +278,10 @@
     </view>
     <!-- 3 Aspetto valori di g FG5-238 -->
     <view label="Correzione tramite misura FG5-238">
-    
+      
+        <edit signed="false"unit="[[unit_short_degree]] default="45,8919" label="latitudine FG5-238">
+            <output>lat0</output>
+          </edit>    
     </view>
   </views>
   <export>

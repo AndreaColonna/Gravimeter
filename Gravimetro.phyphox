@@ -279,7 +279,7 @@
     <!-- 3 Aspetto valori di g FG5-238 -->
     <view label="Correzione tramite misura FG5-238">
       
-        <edit signed="false"unit="[[unit_short_degree]]" default="45,8919" label="latitudine FG5-238">
+        <edit signed="false"unit="[[unit_short_degree]]" default="45.8919" label="latitudine FG5-238">
             <output>lat0</output>
           </edit>    
     </view>

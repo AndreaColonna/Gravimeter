@@ -269,7 +269,10 @@
         <input>count_c</input>
       </value>        
     </view>
-
+    <!-- 3 Aspetto valori di g FG5-238 -->
+    <view label="Correzione tramite misura FG5-238">
+    
+    </view>
   </views>
   <export>
     <set name="Dati grezzi">

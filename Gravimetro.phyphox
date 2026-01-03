@@ -285,6 +285,9 @@
         <edit signed="false"unit="m" default="212" label="altezza FG5-238">
             <output>h0</output>
         </edit> 
+        <edit signed="false" default="Rovereto" label="sito FG5-238">
+            <output>site</output>
+        </edit> 
     </view>
   </views>
   <export>

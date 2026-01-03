@@ -69,7 +69,6 @@
     <container size="0">h0</container>
     <container size="0">g0</container>
     <container size="0">Eg0</container>
-    <container size="0">site</container>
   </data-containers>
 <!-- Dati del telefonino -->
   <input>
@@ -239,7 +238,7 @@
       </value>
     </view>
     <!-- 2 Aspetto valori GPS -->
-    <view label="Correzione GPS-WGS84">
+    <view label="Misura GPS-WGS84">
       <value size="1" precision="6" unit="[[unit_short_degree]]" label="Latitudine">
         <input>lat</input>
       </value>
@@ -277,7 +276,7 @@
       </value>        
     </view>
     <!-- 3 Aspetto valori di g FG5-238 -->
-    <view label="Correzione tramite misura FG5-238">
+    <view label="Misura FG5-238">
       
         <edit signed="false"unit="[[unit_short_degree]]" default="45.8919" label="latitudine FG5-238">
             <output>lat0</output>
@@ -285,9 +284,6 @@
         <edit signed="false"unit="m" default="212" label="altezza FG5-238">
             <output>h0</output>
         </edit> 
-        <edit type="text" label="sito FG5-238" signed="false" unit="" default="Rovereto" memory="true">
-            <output>site</output>
-         </edit> 
         <edit signed="false"unit="m/s²" default="9.80629220" label="g FG5-238">
             <output>g0</output>
         </edit>

@@ -287,7 +287,13 @@
         </edit> 
         <edit signed="false" default="Rovereto" label="sito FG5-238">
             <output>site</output>
-        </edit> 
+        </edit>
+        <edit signed="false"unit="m/s²" default="9.80629220" label="g FG5-238">
+            <output>g0</output>
+        </edit>
+        <edit signed="false"unit="m/s²" default="0.00000002" label="errore g FG5-238">
+            <output>Eg0</output>
+        </edit>
     </view>
   </views>
   <export>

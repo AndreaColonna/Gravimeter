@@ -81,6 +81,7 @@
     <location>
         <output component="lat">lat</output>          <!-- Latitudine (gradi) -->
         <output component="zwgs84">zwgs84</output>    <!-- Altezza sopra ellissoide WGS84 (metri) -->
+        <container size="0">zAccuracy</container>    <!-- stima del sistema della precisione verticale in metri -->
         <output component="t">t1</output>             <!-- Timestamp GPS (se vuoi usarlo) -->
     </location>
   </input>
@@ -245,6 +246,9 @@
       <separator/>
       <value precision="6" unit="m" label="altezza WGS84">
         <input>zwgs84</input>
+      </value>
+      <value precision="6" unit="m" label="incertezza altezza">
+        <input>zAccuracy</input>
       </value>
       <value precision="6" unit="m/s²" label="g_t">
         <input>z</input>

@@ -266,12 +266,6 @@
       <value precision="6" unit="m/s²" label="E_g">
         <input>Dg</input>
       </value>
-     <value label="g teorica" size="1.2" type="string">
-    <formula>
-        "(" &amp; z &amp; " ± " &amp; Dg &amp; ") m/s²"
-    </formula>
-    </value>  
-
       <value precision="6" unit=" " label="bias">
         <input>bias</input>  
       </value>
@@ -299,24 +293,28 @@
       </value>        
     </view>
     <!-- 3 Aspetto valori di g tabulati -->
-    <view label="Misura di g tabulata">
-      
-        <edit signed="false"unit="[[unit_short_degree]]" default="45.8919" label="latitudine FG5-238">
-            <output>lat0</output>
-        </edit> 
-        <edit signed="false"unit="m" default="220" label="altezza media">
-            <output>h0</output>
-        </edit> 
+<view label="Misura di g tabulata">
+    <!-- campi di input (rimangono editabili) -->
+    <edit signed="false" unit="[[unit_short_degree]]" default="45.8919" label="latitudine FG5-238">
+        <output>lat0</output>
+    </edit>
+    <edit signed="false" unit="m" default="220" label="altezza media">
+        <output>h0</output>
+    </edit>
+    <edit signed="false" unit="m/s²" default="9.8066" label="g INGV">
+        <output>g0</output>
+    </edit>
+    <edit signed="false" unit="m/s²" default="0.0002" label="errore g INGV">
+        <output>Eg0</output>
+    </edit>
 
-        
-        
-        <edit signed="false"unit="m/s²" default="9.8066" label="g INGV">
-            <output>g0</output>
-        </edit>
-        <edit signed="false"unit="m/s²" default="0.0002" label="errore g INGV">
-            <output>Eg0</output>
-        </edit>
-    </view>
+    <!-- visualizzazione compatta (NESSUN analysis, solo view) -->
+    <value label="g tabulata" size="1.2" type="string">
+        <formula>
+            "(" &amp; g0 &amp; " ± " &amp; Eg0 &amp; ") m/s²"
+        </formula>
+    </value>
+</view>
   </views>
   <export>
     <set name="Dati grezzi">

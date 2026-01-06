@@ -172,12 +172,12 @@
   <output>accZ_c</output>
 </multiply>
         <!-- Calcolo Binning -->
-    <binning>
-      <input as="in" keep="true">accZ_c</input>
-      <input as="dx" keep="true">binSize_c</input>
-      <output>binStart_c</output>
-      <output>binCount_c</output>
-    </binning>
+<binning require="1">
+  <input as="in" keep="true">accZ_c</input>
+  <input as="dx" keep="true">binSize_c</input>
+  <output>binStart_c</output>
+  <output>binCount_c</output>
+</binning>
     <!-- Calcolo media -->
     <average>
       <input as="buffer" keep="true">accZ_c</input>

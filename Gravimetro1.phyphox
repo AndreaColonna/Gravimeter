@@ -208,7 +208,7 @@
       <output>gaussianX_c</output>
     </ramp>
     <!-- Calcolo della gaussiana -->
-    <formula formula="[4]*[5]*exp(-0.5*([1_]-[2])^2/[3]^2)/(2.506628*[3])">
+    <formula require="1" formula="[4]*[5]*exp(-0.5*([1_]-[2])^2/[3]^2)/(2.506628*[3])">
       <input keep="true">gaussianX_c</input>
       <input keep="true">average_c</input>
       <input keep="true">deviation_c</input>

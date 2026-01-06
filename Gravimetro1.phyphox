@@ -179,7 +179,7 @@
   <output>binCount_c</output>
 </binning>
     <!-- Calcolo media -->
-    <average>
+    <average require="1">
       <input as="buffer" keep="true">accZ_c</input>
       <output as="average">average_c</output>
       <output as="stddev">deviation_c</output>

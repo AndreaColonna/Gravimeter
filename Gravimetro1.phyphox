@@ -279,7 +279,7 @@
   <output>binSize_c</output>
 </edit>
      
-      <value precision="6" unit="m/s²" label="g_z">
+      <value require="1" precision="6" unit="m/s²" label="g_z">
         <input>accZ_c</input>
       </value>
       <value precision="6" unit="m/s²" factor="1" label="valor medio g_z">

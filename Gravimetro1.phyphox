@@ -269,7 +269,7 @@
         <input>bias</input>  
       </value>
 
-      <graph label="Istogramma" labelX="g_z" labelY="Count" unitX="m/s²" xPrecision="4">
+      <graph require="1" label="Istogramma" labelX="g_z" labelY="Count" unitX="m/s²" xPrecision="4">
         <input axis="x">gaussianX_c</input>
         <input lineWidth="2" axis="y">gaussian_c</input>
         <input axis="x">binStart_c</input>

@@ -190,7 +190,7 @@
       <output>count_c</output>
     </count>
     <!-- Calcolo distribuzione gaussiana -->
-    <subrange>
+    <subrange require="1">
       <input as="in" keep="true">binStart_c</input>
       <input as="from" type="value">0</input>
       <input as="length" type="value">1</input>

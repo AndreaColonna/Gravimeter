@@ -300,6 +300,9 @@
         <edit signed="false"unit="m" default="220" label="altezza media">
             <output>h0</output>
         </edit> 
+
+        
+        
         <edit signed="false"unit="m/s²" default="9.8066" label="g INGV">
             <output>g0</output>
         </edit>

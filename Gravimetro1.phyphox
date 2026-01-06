@@ -185,7 +185,7 @@
       <output as="stddev">deviation_c</output>
     </average>
     <!-- Cacolo Conteggio -->
-    <count>
+    <count require="1">
       <input as="buffer" keep="true">accZ_c</input>
       <output>count_c</output>
     </count>

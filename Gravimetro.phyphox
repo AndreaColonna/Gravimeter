@@ -153,9 +153,7 @@
       <output>z</output>
     </formula>
     <!-- Calcolo dell'errore del valore teorico di g dovuto a zwgs84 -->
-    <formula formula="9.7803184*(1+0.0053024*[1_]^2-0.0000059*[2_]^2)-0.000003086*[3_]">
-      <input keep="true">sinL</input>
-      <input keep="true">sin2L</input>
+    <formula formula="0.000003086*[1_]">
       <input keep="true">zAccuracy</input>
       <output>Dg</output>
     </formula>

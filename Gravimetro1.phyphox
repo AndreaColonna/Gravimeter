@@ -160,11 +160,11 @@
     </formula>
 
 <!-- Calcolo del fattore di calibrazione moltiplicativo -->
-    <divide require="5>
-      <input keep="true">z</input>
-      <input keep="true">average</input>
-      <output>bias</output>
-    </divide>
+<divide require="1">
+  <input keep="true">z</input>
+  <input keep="true">average</input>
+  <output>bias</output>
+</divide>
     <!-- Applicazione calibrazione moltiplicativa -->
     <multiply>
       <input keep="true">accZ</input>

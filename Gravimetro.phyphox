@@ -44,6 +44,7 @@
   
     <container size="0">lat</container>
     <container size="0">zwgs84</container>
+    <container size="0">zAccuracy</container>
     <container size="0">z</container>
     <container size="0">t1</container>
     

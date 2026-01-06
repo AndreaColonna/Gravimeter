@@ -166,11 +166,11 @@
   <output>bias</output>
 </divide>
     <!-- Applicazione calibrazione moltiplicativa -->
-    <multiply>
-      <input keep="true">accZ</input>
-      <input keep="true">bias</input>
-      <output>accZ_c</output>
-    </multiply>
+<multiply require="1">
+  <input keep="true">accZ</input>
+  <input keep="true">bias</input>
+  <output>accZ_c</output>
+</multiply>
         <!-- Calcolo Binning -->
     <binning>
       <input as="in" keep="true">accZ_c</input>

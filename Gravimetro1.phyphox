@@ -278,7 +278,7 @@
 <edit signed="false" unit="m/s²" default="0.01" label="Bin size calibrato">
   <output>binSize_c</output>
 </edit>
-      </edit>
+     
       <value precision="6" unit="m/s²" label="g_z">
         <input>accZ_c</input>
       </value>

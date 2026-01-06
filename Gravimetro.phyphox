@@ -291,19 +291,19 @@
         <input>count_c</input>
       </value>        
     </view>
-    <!-- 3 Aspetto valori di g FG5-238 -->
-    <view label="Misura FG5-238">
+    <!-- 3 Aspetto valori di g tabulati -->
+    <view label="Misura di g tabulata">
       
         <edit signed="false"unit="[[unit_short_degree]]" default="45.8919" label="latitudine FG5-238">
             <output>lat0</output>
         </edit> 
-        <edit signed="false"unit="m" default="212" label="altezza FG5-238">
+        <edit signed="false"unit="m" default="220" label="altezza media">
             <output>h0</output>
         </edit> 
-        <edit signed="false"unit="m/s²" default="9.80629220" label="g FG5-238">
+        <edit signed="false"unit="m/s²" default="9.8066" label="g INGV">
             <output>g0</output>
         </edit>
-        <edit signed="false"unit="m/s²" default="0.00000002" label="errore g FG5-238">
+        <edit signed="false"unit="m/s²" default="0.0002" label="errore g INGV">
             <output>Eg0</output>
         </edit>
     </view>

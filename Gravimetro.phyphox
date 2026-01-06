@@ -46,6 +46,7 @@
     <container size="0">zwgs84</container>
     <container size="0">zAccuracy</container>
     <container size="0">z</container>
+    <container size="0">Dg</container>
     <container size="0">t1</container>
     
     <container size="0">sinL</container>
@@ -151,7 +152,15 @@
       <input keep="true">zwgs84</input>
       <output>z</output>
     </formula>
-    <!-- Calcolo del fattore di calibrazione moltiplicativo -->
+    <!-- Calcolo dell'errore del valore teorico di g dovuto a zwgs84 -->
+    <formula formula="9.7803184*(1+0.0053024*[1_]^2-0.0000059*[2_]^2)-0.000003086*[3_]">
+      <input keep="true">sinL</input>
+      <input keep="true">sin2L</input>
+      <input keep="true">zAccuracy</input>
+      <output>Dg</output>
+    </formula>
+
+<!-- Calcolo del fattore di calibrazione moltiplicativo -->
     <divide>
       <input keep="true">z</input>
       <input keep="true">average</input>
@@ -248,12 +257,16 @@
       <value precision="6" unit="m" label="altezza WGS84">
         <input>zwgs84</input>
       </value>
-      <value precision="6" unit="m" label="incertezza altezza">
+      <value precision="4" unit="m" label="incertezza altezza">
         <input>zAccuracy</input>
       </value>
       <value precision="6" unit="m/s²" label="g_t">
         <input>z</input>
       </value>
+      <value precision="6" unit="m/s²" label="E_g">
+        <input>Dg</input>
+      </value>
+
       <value precision="6" unit=" " label="bias">
         <input>bias</input>  
       </value>

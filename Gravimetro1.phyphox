@@ -308,11 +308,11 @@
     </edit>
 
     <!-- visualizzazione compatta (NESSUN analysis, solo view) -->
-    <value label="g tabulata" size="1.2" type="string">
-        <formula>
-            "(" &amp; g0 &amp; " ± " &amp; Eg0 &amp; ") m/s²"
-        </formula>
-    </value>
+<value label="g tabulata" size="1.2" type="string">
+    <formula>
+        "(" &amp; g0 &amp; " ± " &amp; Eg0 &amp; ") m/s²"
+    </formula>
+</value>
 </view>
   </views>
   <export>

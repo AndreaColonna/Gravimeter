@@ -197,7 +197,7 @@
       <output as="out">minX_c</output>
     </subrange>
     <!-- Calcolo del massimo -->
-    <max>
+    <max require="1">
       <input as="y" keep="true">binStart_c</input>
       <output as="max">maxX_c</output>
     </max>

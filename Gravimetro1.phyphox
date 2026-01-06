@@ -217,12 +217,6 @@
       <input keep="true">count_c</input>
       <output>gaussian_c</output>
     </formula>
-
-    <value id="gDisplay" type="string">
-       <formula>
-        "(" &amp; z &amp; " ± " &amp; Dg &amp; ") m/s²"
-       </formula>
-   </value>
   </analysis>
   <!-- Aspetto -->
   <views>
@@ -272,7 +266,11 @@
       <value precision="6" unit="m/s²" label="E_g">
         <input>Dg</input>
       </value>
-      <value id="gDisplay" label="g teorica" size="1.2"/>  
+     <value label="g teorica" size="1.2">
+    <formula>
+        "(" &amp; z &amp; " ± " &amp; Dg &amp; ") m/s²"
+    </formula>
+    </value>  
 
       <value precision="6" unit=" " label="bias">
         <input>bias</input>  

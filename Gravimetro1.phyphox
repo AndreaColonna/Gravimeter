@@ -160,7 +160,7 @@
     </formula>
 
 <!-- Calcolo del fattore di calibrazione moltiplicativo -->
-    <divide>
+    <divide require="5>
       <input keep="true">z</input>
       <input keep="true">average</input>
       <output>bias</output>

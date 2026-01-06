@@ -202,7 +202,7 @@
       <output as="max">maxX_c</output>
     </max>
     <!-- Calcolo dell'ampiezza della gaussiana -->
-    <ramp>
+    <ramp require="1">
       <input as="start" keep="true">minX_c</input>
       <input as="stop" keep="true">maxX_c</input>
       <output>gaussianX_c</output>

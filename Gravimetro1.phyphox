@@ -266,7 +266,7 @@
       <value precision="6" unit="m/s²" label="E_g">
         <input>Dg</input>
       </value>
-     <value label="g teorica" size="1.2">
+     <value label="g teorica" size="1.2" type="string">
     <formula>
         "(" &amp; z &amp; " ± " &amp; Dg &amp; ") m/s²"
     </formula>

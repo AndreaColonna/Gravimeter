@@ -293,10 +293,12 @@
     </view>
     <!-- 3 Aspetto valori di g tabulati -->
     <view label="Misura di g tabulata">
-      
-        <edit signed="false"unit="[[unit_short_degree]]" default="45.8919" label="latitudine FG5-238">
-            <output>lat0</output>
-        </edit> 
+<edit signed="false"
+      unit="[[unit_short_degree]]"
+      default="45.8919"
+      label="latitudine FG5-238">
+    <output>lat0</output>
+</edit>
         <edit signed="false"unit="m" default="220" label="altezza media">
             <output>h0</output>
         </edit> 

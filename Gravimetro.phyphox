@@ -1,4 +1,4 @@
-<phyphox xmlns="https://phyphox.org/xml" version="1.10">
+<phyphox xmlns="https://phyphox.org/xml" version="1.19">
 <!--
     Funzionante
     ESPERIMENTO PHYPHOX: GRAVIMETRO 
@@ -291,7 +291,7 @@
         <input>count_c</input>
       </value>        
     </view>
-    <!-- 3 Aspetto valori di g tabulati -->
+    <!-- 3 Aspetto valori di g tabulati
     <view label="Misura di g tabulata">
 <edit signed="false"
       unit="[[unit_short_degree]]"
@@ -308,7 +308,7 @@
         <edit signed="false"unit="m/s²" default="0.0002" label="errore g INGV">
             <output>Eg0</output>
         </edit>
-    </view>
+    </view>  -->
   </views>
   <export>
     <set name="Dati grezzi">

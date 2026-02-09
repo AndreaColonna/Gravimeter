@@ -223,7 +223,7 @@
       <output>gaussian_c</output>
     </formula>
     <!-- Formattazione del valore tabulato di g -->
-    <formula formula='"("&amp;round([1]/10000)/100&amp;" ± "&amp;round([2]/10000)/100&amp;")"'>
+    <formula formula='"(" &amp; round([1]*100)/100 &amp; " ± " &amp; round([2]*100)/100 &amp; ")"'>
       <input keep="true">g0</input>
       <input keep="true">Eg0</input>
       <output>g0_str</output>

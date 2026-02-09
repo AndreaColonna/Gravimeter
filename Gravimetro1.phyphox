@@ -311,8 +311,10 @@
     <!-- visualizzazione compatta (NESSUN analysis, solo view) -->
 <value label="g tabulata" size="1.2" type="string">
     <formula>
-        "(" &amp; g0 &amp; " ± " &amp; Eg0 &amp; ") m/s²"
+        "(" &amp; [1] &amp; " ± " &amp; [2] &amp; ") m/s²"
     </formula>
+    <input>g0</input>
+    <input>Eg0</input>
 </value>
 </view>
   </views>

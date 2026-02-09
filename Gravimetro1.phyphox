@@ -83,10 +83,15 @@
     </sensor>
 <!-- Dati GPS -->    
     <location>
-        <output component="lat">lat</output>          <!-- Latitudine (gradi) -->
-        <output component="zwgs84">zwgs84</output>    <!-- Altezza sopra ellissoide WGS84 (metri) -->
-        <output component="zAccuracy">zAccuracy</output>    <!-- stima del sistema della precisione verticale in metri -->
-        <output component="t">t1</output>             <!-- Timestamp GPS (se vuoi usarlo) -->
+    
+        <output component="lat">lat</output>          
+        
+        <output component="zwgs84">zwgs84</output>    
+        
+        <output component="zAccuracy">zAccuracy</output>    
+        
+        <output component="t">t1</output>             
+    
     </location>
   </input>
 <!-- Calcolo -->  
@@ -114,7 +119,7 @@
       <input as="in" keep="true">binStart</input>
       <input as="from" type="value">0</input>
       <input as="length" type="value">1</input>
-      <output as="out">minX</output>
+      <output>minX</output>
     </subrange>
     <!-- Calcolo del massimo -->
     <max>
@@ -195,7 +200,7 @@
       <input as="in" keep="true">binStart_c</input>
       <input as="from" type="value">0</input>
       <input as="length" type="value">1</input>
-      <output as="out">minX_c</output>
+      <output>minX_c</output>
     </subrange>
     <!-- Calcolo del massimo -->
     <max require="1">
@@ -218,7 +223,7 @@
       <output>gaussian_c</output>
     </formula>
     <!-- Formattazione del valore tabulato di g -->
-    <formula formula="""(""&amp;round([1]/10000)/100&amp;"" ± ""&amp;round([2]/10000)/100&amp;"""")
+    <formula formula='"("&amp;round([1]/10000)/100&amp;" ± "&amp;round([2]/10000)/100&amp;")"'>
       <input keep="true">g0</input>
       <input keep="true">Eg0</input>
       <output>g0_str</output>

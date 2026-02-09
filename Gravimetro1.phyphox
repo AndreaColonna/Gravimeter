@@ -71,6 +71,7 @@
     <container size="0">h0</container>
     <container size="0">g0</container>
     <container size="0">Eg0</container>
+    <container>g0_str</container>
 
   </data-containers>
 <!-- Dati del telefonino -->
@@ -216,6 +217,12 @@
       <input keep="true">count_c</input>
       <output>gaussian_c</output>
     </formula>
+    <!-- Formattazione del valore tabulato di g -->
+    <formula formula="""(""&amp;round([1]/10000)/100&amp;"" ± ""&amp;round([2]/10000)/100&amp;"""")
+      <input keep="true">g0</input>
+      <input keep="true">Eg0</input>
+      <output>g0_str</output>
+    </formula>
   </analysis>
   <!-- Aspetto -->
   <views>
@@ -310,11 +317,7 @@
 
     <!-- visualizzazione compatta (NESSUN analysis, solo view) -->
 <value label="g tabulata" size="1.2" type="string">
-    <formula>
-        "(" &amp; [1] &amp; " ± " &amp; [2] &amp; ") m/s²"
-    </formula>
-    <input>g0</input>
-    <input>Eg0</input>
+    <input>g0_str</input>
 </value>
 </view>
   </views>

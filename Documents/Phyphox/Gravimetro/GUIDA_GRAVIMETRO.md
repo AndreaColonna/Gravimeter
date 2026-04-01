@@ -23,6 +23,8 @@ Il risultato finale è una misura statistica di g calibrata e centrata sul valor
 
 Scansiona questo QR code con phyphox (menu → Aggiungi esperimento → Scansiona QR code):
 
+![QR code Gravimetro](https://raw.githubusercontent.com/AndreaColonna/Gravimeter/master/Documents/Phyphox/Gravimetro/QRCODE.png)
+
 > URL diretto:
 > `https://raw.githubusercontent.com/AndreaColonna/Gravimeter/master/Documents/Phyphox/Gravimetro/gravimetro.phyphox`
 

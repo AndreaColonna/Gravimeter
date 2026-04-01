@@ -1,0 +1,470 @@
+<phyphox xmlns="https://phyphox.org/xml" version="1.19">
+<!--
+    ESPERIMENTO PHYPHOX: GRAVIMETRO
+    
+    Logica:
+      1. Legge latitudine (lat) e altezza WGS84 (h) dal GPS
+      2. Calcola g teorico con la formula di Somigliana corretta per altitudine:
+            g_t = 9.7803184 * (1 + 0.0053024*sin²(L) - 0.0000059*sin²(2L)) - 3.086e-6 * h
+      3. Calcola la media di gz sulle ultime 100 misure dell'accelerometro (avg100)
+      4. Calcola il fattore di normalizzazione: bias = g_t / avg100
+      5. Applica il bias a tutte le misure: accZ_c = accZ * bias
+      6. Mostra la distribuzione statistica di g calibrato
+-->
+  <title>Gravimetro</title>
+  <category>Meccanica statistica</category>
+  <color>yellow</color>
+  <description>Misura l'accelerazione di gravità tramite accelerometro calibrato con GPS.
+Calcola g teorico dalla latitudine e altezza WGS84, poi normalizza le misure
+dell'accelerometro per ottenere g statisticamente.</description>
+
+  <data-containers>
+    <!-- Dati grezzi accelerometro -->
+    <container size="0">accZ</container>
+    <container size="0">t</container>
+
+    <!-- Ultime 100 misure per la media -->
+    <container size="100">accZ100</container>
+    <container>avg100</container>
+    <container>dev100</container>
+    <container>count100</container>
+
+    <!-- Istogramma grezzo -->
+    <container>binSize</container>
+    <container size="0">binStart</container>
+    <container size="0">binCount</container>
+    <container>average</container>
+    <container>deviation</container>
+    <container>count</container>
+    <container>minX</container>
+    <container>maxX</container>
+    <container size="500">gaussianX</container>
+    <container size="500">gaussian</container>
+
+    <!-- Dati GPS -->
+    <container size="0">lat</container>
+    <container size="0">zwgs84</container>
+    <container size="0">zAccuracy</container>
+    <container size="0">t1</container>
+
+    <!-- Calcolo g teorico -->
+    <container size="0">sinL</container>
+    <container size="0">sin2L_raw</container>
+    <container size="0">sin2L</container>
+    <container size="0">g_teorico</container>
+    <container size="0">Dg</container>
+
+    <!-- Calibrazione -->
+    <container>bias</container>
+    <container size="0">accZ_c</container>
+
+    <!-- Istogramma calibrato -->
+    <container>binSize_c</container>
+    <container size="0">binStart_c</container>
+    <container size="0">binCount_c</container>
+    <container>average_c</container>
+    <container>deviation_c</container>
+    <container>count_c</container>
+    <container>minX_c</container>
+    <container>maxX_c</container>
+    <container size="500">gaussianX_c</container>
+    <container size="500">gaussian_c</container>
+
+    <!-- Valori tabulati di riferimento -->
+    <container size="0">lat0</container>
+    <container size="0">h0</container>
+    <container size="0">g0</container>
+    <container size="0">Eg0</container>
+    <container>g0_str</container>
+  </data-containers>
+
+  <input>
+    <!-- Accelerometro: componente z e tempo -->
+    <sensor type="accelerometer">
+      <output component="z">accZ</output>
+      <output component="t">t</output>
+    </sensor>
+    <!-- GPS: latitudine, altezza WGS84, incertezza altezza, tempo -->
+    <location>
+      <output component="lat">lat</output>
+      <output component="zwgs84">zwgs84</output>
+      <output component="zAccuracy">zAccuracy</output>
+      <output component="t">t1</output>
+    </location>
+  </input>
+
+  <analysis sleep="0">
+
+    <!-- ============================================================
+         SEZIONE 1: STATISTICHE SU TUTTE LE MISURE (istogramma live)
+         ============================================================ -->
+
+    <!-- Binning su tutte le misure -->
+    <binning>
+      <input as="in" keep="true">accZ</input>
+      <input as="dx" keep="true">binSize</input>
+      <output as="binStarts">binStart</output>
+      <output as="binCounts">binCount</output>
+    </binning>
+
+    <!-- Media e deviazione standard su tutte le misure -->
+    <average>
+      <input as="buffer" keep="true">accZ</input>
+      <output as="average">average</output>
+      <output as="stddev">deviation</output>
+    </average>
+
+    <!-- Conteggio totale -->
+    <count>
+      <input as="buffer" keep="true">accZ</input>
+      <output>count</output>
+    </count>
+
+    <!-- Gaussiana: estremo inferiore (primo bin) -->
+    <subrange>
+      <input as="in" keep="true">binStart</input>
+      <input as="from" type="value">0</input>
+      <input as="length" type="value">1</input>
+      <output>minX</output>
+    </subrange>
+
+    <!-- Gaussiana: estremo superiore (ultimo bin) -->
+    <max>
+      <input as="y" keep="true">binStart</input>
+      <output as="max">maxX</output>
+    </max>
+
+    <!-- Asse x della gaussiana -->
+    <ramp>
+      <input as="start" keep="true">minX</input>
+      <input as="stop" keep="true">maxX</input>
+      <output>gaussianX</output>
+    </ramp>
+
+    <!-- Curva gaussiana normalizzata -->
+    <formula formula="[4]*[5]*exp(-0.5*([1_]-[2])^2/[3]^2)/(2.506628*[3])">
+      <input keep="true">gaussianX</input>
+      <input keep="true">average</input>
+      <input keep="true">deviation</input>
+      <input keep="true">binSize</input>
+      <input keep="true">count</input>
+      <output>gaussian</output>
+    </formula>
+
+    <!-- ============================================================
+         SEZIONE 2: MEDIA SULLE ULTIME 100 MISURE
+         ============================================================ -->
+
+    <!-- Prende le ultime 100 misure dal buffer accZ -->
+    <subrange>
+      <input as="in" keep="true">accZ</input>
+      <input as="from" type="value">-100</input>
+      <output>accZ100</output>
+    </subrange>
+
+    <!-- Media e deviazione standard sulle ultime 100 misure -->
+    <average>
+      <input as="buffer" keep="true">accZ100</input>
+      <output as="average">avg100</output>
+      <output as="stddev">dev100</output>
+    </average>
+
+    <!-- Conteggio delle ultime 100 misure -->
+    <count>
+      <input as="buffer" keep="true">accZ100</input>
+      <output>count100</output>
+    </count>
+
+    <!-- ============================================================
+         SEZIONE 3: CALCOLO G TEORICO DA GPS
+         ============================================================ -->
+
+    <!-- sin(L) con L in gradi -->
+    <sin deg="true">
+      <input keep="true">lat</input>
+      <output>sinL</output>
+    </sin>
+
+    <!-- sin(2L): prima calcola 2*L, poi applica sin -->
+    <formula formula="2*[1_]">
+      <input keep="true">lat</input>
+      <output>sin2L_raw</output>
+    </formula>
+
+    <sin deg="true">
+      <input keep="true">sin2L_raw</input>
+      <output>sin2L</output>
+    </sin>
+
+    <!-- Formula di Somigliana + correzione altimetrica:
+         g_t = 9.7803184*(1 + 0.0053024*sin²(L) - 0.0000059*sin²(2L)) - 3.086e-6*h -->
+    <formula formula="9.7803184*(1+0.0053024*[1_]^2-0.0000059*[2_]^2)-0.000003086*[3_]">
+      <input keep="true">sinL</input>
+      <input keep="true">sin2L</input>
+      <input keep="true">zwgs84</input>
+      <output>g_teorico</output>
+    </formula>
+
+    <!-- Incertezza su g_t dovuta all'incertezza sull'altezza GPS -->
+    <formula formula="0.000003086*[1_]">
+      <input keep="true">zAccuracy</input>
+      <output>Dg</output>
+    </formula>
+
+    <!-- ============================================================
+         SEZIONE 4: FATTORE DI NORMALIZZAZIONE E CALIBRAZIONE
+         bias = g_teorico / avg100  (usa l'ultimo valore GPS e la media delle 100)
+         ============================================================ -->
+
+    <divide>
+      <input keep="true">g_teorico</input>
+      <input keep="true">avg100</input>
+      <output>bias</output>
+    </divide>
+
+    <!-- Applica il bias a tutte le misure grezze -->
+    <multiply>
+      <input keep="true">accZ</input>
+      <input keep="true">bias</input>
+      <output>accZ_c</output>
+    </multiply>
+
+    <!-- ============================================================
+         SEZIONE 5: STATISTICHE SUI DATI CALIBRATI
+         ============================================================ -->
+
+    <binning>
+      <input as="in" keep="true">accZ_c</input>
+      <input as="dx" keep="true">binSize_c</input>
+      <output as="binStarts">binStart_c</output>
+      <output as="binCounts">binCount_c</output>
+    </binning>
+
+    <average>
+      <input as="buffer" keep="true">accZ_c</input>
+      <output as="average">average_c</output>
+      <output as="stddev">deviation_c</output>
+    </average>
+
+    <count>
+      <input as="buffer" keep="true">accZ_c</input>
+      <output>count_c</output>
+    </count>
+
+    <subrange>
+      <input as="in" keep="true">binStart_c</input>
+      <input as="from" type="value">0</input>
+      <input as="length" type="value">1</input>
+      <output>minX_c</output>
+    </subrange>
+
+    <max>
+      <input as="y" keep="true">binStart_c</input>
+      <output as="max">maxX_c</output>
+    </max>
+
+    <ramp>
+      <input as="start" keep="true">minX_c</input>
+      <input as="stop" keep="true">maxX_c</input>
+      <output>gaussianX_c</output>
+    </ramp>
+
+    <formula formula="[4]*[5]*exp(-0.5*([1_]-[2])^2/[3]^2)/(2.506628*[3])">
+      <input keep="true">gaussianX_c</input>
+      <input keep="true">average_c</input>
+      <input keep="true">deviation_c</input>
+      <input keep="true">binSize_c</input>
+      <input keep="true">count_c</input>
+      <output>gaussian_c</output>
+    </formula>
+
+    <!-- ============================================================
+         SEZIONE 6: FORMATTAZIONE VALORE TABULATO
+         ============================================================ -->
+    <formula formula='"(" &amp; round([1]*10000)/10000 &amp; " ± " &amp; round([2]*10000)/10000 &amp; ") m/s²"'>
+      <input keep="true">g0</input>
+      <input keep="true">Eg0</input>
+      <output>g0_str</output>
+    </formula>
+
+  </analysis>
+
+  <views>
+
+    <!-- ============================================================
+         SCHEDA 1: Misura statistica grezza di g_z
+         ============================================================ -->
+    <view label="Misura statistica g_z">
+
+      <graph label="g_z(t) grezzo" aspectRatio="2.5" partialUpdate="true"
+             labelX="t" unitX="s" labelY="g_z" unitY="m/s²"
+             xPrecision="3" yPrecision="4">
+        <input axis="x">t</input>
+        <input axis="y">accZ</input>
+      </graph>
+
+      <graph label="Istogramma grezzo" labelX="g_z" unitX="m/s²" labelY="Conteggi" xPrecision="4">
+        <input axis="x">gaussianX</input>
+        <input lineWidth="2" axis="y">gaussian</input>
+        <input axis="x">binStart</input>
+        <input color="E0E040" style="vbars" lineWidth="0.9" axis="y">binCount</input>
+      </graph>
+
+      <edit signed="false" unit="m/s²" default="0.01" label="Ampiezza bin">
+        <output>binSize</output>
+      </edit>
+
+      <value precision="4" unit="m/s²" label="g_z istantaneo">
+        <input>accZ</input>
+      </value>
+      <value precision="6" unit="m/s²" label="Media (tutte le misure)">
+        <input>average</input>
+      </value>
+      <value precision="6" unit="m/s²" label="Dev. standard">
+        <input>deviation</input>
+      </value>
+      <value precision="0" label="Conteggio totale">
+        <input>count</input>
+      </value>
+
+      <separator/>
+
+      <value precision="6" unit="m/s²" label="Media (ultime 100 misure)">
+        <input>avg100</input>
+      </value>
+      <value precision="6" unit="m/s²" label="Dev. standard (100)">
+        <input>dev100</input>
+      </value>
+      <value precision="0" label="Conteggio (100)">
+        <input>count100</input>
+      </value>
+
+    </view>
+
+    <!-- ============================================================
+         SCHEDA 2: Dati GPS e calibrazione
+         ============================================================ -->
+    <view label="GPS e calibrazione">
+
+      <value size="1" precision="6" unit="°" label="Latitudine">
+        <input>lat</input>
+      </value>
+      <value precision="2" unit="m" label="Altezza WGS84">
+        <input>zwgs84</input>
+      </value>
+      <value precision="2" unit="m" label="Incertezza altezza">
+        <input>zAccuracy</input>
+      </value>
+
+      <separator/>
+
+      <value precision="6" unit="m/s²" label="g teorico (Somigliana)">
+        <input>g_teorico</input>
+      </value>
+      <value precision="6" unit="m/s²" label="Incertezza g teorico">
+        <input>Dg</input>
+      </value>
+
+      <separator/>
+
+      <value precision="8" unit=" " label="Fattore di normalizzazione (bias)">
+        <input>bias</input>
+      </value>
+
+    </view>
+
+    <!-- ============================================================
+         SCHEDA 3: g calibrato (misura statistica finale)
+         ============================================================ -->
+    <view label="g calibrato">
+
+      <graph label="g_z(t) calibrato" aspectRatio="2.5" partialUpdate="true"
+             labelX="t" unitX="s" labelY="g_z" unitY="m/s²"
+             xPrecision="3" yPrecision="4">
+        <input axis="x">t</input>
+        <input axis="y">accZ_c</input>
+      </graph>
+
+      <graph label="Istogramma calibrato" labelX="g_z" unitX="m/s²" labelY="Conteggi" xPrecision="4">
+        <input axis="x">gaussianX_c</input>
+        <input lineWidth="2" axis="y">gaussian_c</input>
+        <input axis="x">binStart_c</input>
+        <input color="40E0E0" style="vbars" lineWidth="0.9" axis="y">binCount_c</input>
+      </graph>
+
+      <edit signed="false" unit="m/s²" default="0.01" label="Ampiezza bin calibrato">
+        <output>binSize_c</output>
+      </edit>
+
+      <value precision="6" unit="m/s²" label="g_z calibrato istantaneo">
+        <input>accZ_c</input>
+      </value>
+      <value precision="6" unit="m/s²" label="Media g calibrato">
+        <input>average_c</input>
+      </value>
+      <value precision="6" unit="m/s²" label="Dev. standard calibrato">
+        <input>deviation_c</input>
+      </value>
+      <value precision="0" label="Conteggio calibrato">
+        <input>count_c</input>
+      </value>
+
+    </view>
+
+    <!-- ============================================================
+         SCHEDA 4: Valore di riferimento tabulato (INGV / FG5)
+         ============================================================ -->
+    <view label="Valore tabulato">
+
+      <edit signed="false" unit="°" default="45.8919" label="Latitudine riferimento">
+        <output>lat0</output>
+      </edit>
+      <edit signed="false" unit="m" default="220" label="Altezza media (m)">
+        <output>h0</output>
+      </edit>
+      <edit signed="false" unit="m/s²" default="9.8066" label="g INGV/FG5">
+        <output>g0</output>
+      </edit>
+      <edit signed="false" unit="m/s²" default="0.0002" label="Incertezza g INGV">
+        <output>Eg0</output>
+      </edit>
+
+      <value label="g tabulata" size="1.2" type="string">
+        <input>g0_str</input>
+      </value>
+
+    </view>
+
+  </views>
+
+  <export>
+    <set name="Dati grezzi">
+      <data name="tempo (s)">t</data>
+      <data name="g_z grezzo (m/s²)">accZ</data>
+      <data name="g_z calibrato (m/s²)">accZ_c</data>
+    </set>
+    <set name="Statistiche grezze">
+      <data name="media g_z (m/s²)">average</data>
+      <data name="dev. st. g_z (m/s²)">deviation</data>
+      <data name="media ultime 100 (m/s²)">avg100</data>
+      <data name="dev. st. ultime 100 (m/s²)">dev100</data>
+      <data name="bin start (m/s²)">binStart</data>
+      <data name="bin count">binCount</data>
+    </set>
+    <set name="Dati GPS e calibrazione">
+      <data name="latitudine (°)">lat</data>
+      <data name="altezza WGS84 (m)">zwgs84</data>
+      <data name="incertezza altezza (m)">zAccuracy</data>
+      <data name="g teorico (m/s²)">g_teorico</data>
+      <data name="incertezza g teorico (m/s²)">Dg</data>
+      <data name="bias">bias</data>
+    </set>
+    <set name="Statistiche calibrate">
+      <data name="media g calibrato (m/s²)">average_c</data>
+      <data name="dev. st. g calibrato (m/s²)">deviation_c</data>
+      <data name="bin start calibrato (m/s²)">binStart_c</data>
+      <data name="bin count calibrato">binCount_c</data>
+    </set>
+  </export>
+
+</phyphox>

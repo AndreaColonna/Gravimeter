@@ -75,7 +75,6 @@ dell'accelerometro per ottenere g statisticamente.</description>
     <container size="0">h0</container>
     <container size="0">g0</container>
     <container size="0">Eg0</container>
-    <container>g0_str</container>
   </data-containers>
 
   <input>
@@ -278,14 +277,7 @@ dell'accelerometro per ottenere g statisticamente.</description>
       <output>gaussian_c</output>
     </formula>
 
-    <!-- ============================================================
-         SEZIONE 6: FORMATTAZIONE VALORE TABULATO
-         ============================================================ -->
-    <formula formula='"(" &amp; round([1]*10000)/10000 &amp; " +/- " &amp; round([2]*10000)/10000 &amp; ")"'>
-      <input keep="true">g0</input>
-      <input keep="true">Eg0</input>
-      <output>g0_str</output>
-    </formula>
+    <!-- SEZIONE 6: nessuna formula stringa necessaria -->
 
   </analysis>
 
@@ -429,8 +421,11 @@ dell'accelerometro per ottenere g statisticamente.</description>
         <output>Eg0</output>
       </edit>
 
-      <value label="g tabulata" size="1.2" type="string">
-        <input>g0_str</input>
+      <value label="g tabulata" size="1.2" precision="4" unit="m/s²">
+        <input>g0</input>
+      </value>
+      <value label="Incertezza g tabulata" precision="4" unit="m/s²">
+        <input>Eg0</input>
       </value>
 
     </view>

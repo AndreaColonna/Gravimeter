@@ -281,7 +281,7 @@ dell'accelerometro per ottenere g statisticamente.</description>
     <!-- ============================================================
          SEZIONE 6: FORMATTAZIONE VALORE TABULATO
          ============================================================ -->
-    <formula formula='"(" &amp; round([1]*10000)/10000 &amp; " ± " &amp; round([2]*10000)/10000 &amp; ") m/s²"'>
+    <formula formula='"(" &amp; round([1]*10000)/10000 &amp; " +/- " &amp; round([2]*10000)/10000 &amp; ")"'>
       <input keep="true">g0</input>
       <input keep="true">Eg0</input>
       <output>g0_str</output>
